@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  user-service-v1:
+    build: ./user-service
+    ports:
+      - "5001:5001"
+
+  product-service-V1:
+    build: ./product-service-v1
+    ports:
+      - "5002:5002"
+
+  product-service-V2:
+    build: ./product-service-v2
+    ports:
+      - "5002:5002"
+
+      
