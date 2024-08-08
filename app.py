@@ -6,19 +6,20 @@ import os  # Import os to access environment variables
 # Initialize the Flask application
 app = Flask(__name__)
 
-# Fetch MongoDB credentials from environment variables
+# Construct the MongoDB URI from environment variables with defaults
 mongo_user = os.environ.get("MONGODB_USER", "your_username")
 mongo_password = os.environ.get("MONGODB_PASSWORD", "your_password")
 mongo_host = os.environ.get("MONGODB_HOST", "localhost")
 mongo_dbname = os.environ.get("MONGODB_DBNAME", "flask_db")
+mongo_uri = os.environ.get("MONGODB_URI", f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:27018/{mongo_dbname}?authSource=admin")
 
-# Set up the MongoDB client with authentication
-client = MongoClient(f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:27018/{mongo_dbname}?authSource=admin")
+# Set up the MongoDB client using the constructed URI
+client = MongoClient(mongo_uri)
 
 # Connect to the database
 db = client[mongo_dbname]
 
-# Connect to the collection named 'data' within the 'flask_db' database
+# Connect to the collection named 'data' within the database
 collection = db.data
 
 # Define the route for the root URL
